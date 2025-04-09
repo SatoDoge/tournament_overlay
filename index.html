@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html>
-	<head>
-	    <meta charset="UTF-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>BSDP Overlay like</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-	    <link rel="stylesheet" href="bsdp-like.css">
-	</head>
-	<body style="zoom:1.2;">
-	    <div class="scoreStats" id="scoreStats">
-	        <h2 class="time"><span id="song_time">Time</span>/<span id="song_length">Length</span></h2>
-	        <h2 class="score" id="raw_score">Score</h2>
-	        <h2 class="accuracy" id="percentage">Accuracy</h2>
-	        <h2 class="combo" id="combo">Combo</h2>
-	        <h2 class="miss" id="miss">Miss</h2>
-	        <h2 class="mod_nf" id="mod_nf"></h2>
-	    </div>
 
-	    <div class="mapInfo" id="mapInfo" style="display: none;">
-	        <p class="preBSR"><span id="pre_bsr_text">Pre BSR: </span><span id="pre_bsr">00000</span></p>
-	        <div>
-	            <div class="beatmapImageContainer">
-					<img class="beatmapImage" id="image">
-	            </div>
-	            <div class="beatmapInfo">
-	                <p class="bsr"><span id="bsr_text">BSR: </span><span id="bsr">00000</span></p>
-	                <p class="mapper" id="mapper">Mapper</p>
-	                <p class="artist" id="artist">ArtistName</p>
-	                <h1 class="song" id="title">SongName</h1>
-	            </div>
-	        </div>
-	    </div>
-		<script src="./js/options.js"></script>
-		
-		<script src="./js/ui.js"></script>
-		<script src="./js/events.js"></script>
-		<script src="./js/manager.js"></script>
-	</body>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BSDP Overlay like</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="bsdp-like.css">
+</head>
+
+<body style="zoom:1.2;">
+	<div class="scoreStats" id="scoreStats">
+		<h2 class="time"><span id="song_time">Time</span>/<span id="song_length">Length</span></h2>
+		<h2 class="score" id="raw_score">Score</h2>
+		<h2 class="accuracy" id="percentage">Accuracy</h2>
+		<h2 class="accuracy" id="key_score">KeyScore</h2>
+		<h2 class="combo" id="combo">Combo</h2>
+		<h2 class="miss" id="miss">Miss</h2>
+		<h2 class="mod_nf" id="mod_nf"></h2>
+	</div>
+
+	<div class="mapInfo" id="mapInfo" style="display: none;">
+		<p class="preBSR"><span id="pre_bsr_text">Pre BSR: </span><span id="pre_bsr">00000</span></p>
+		<div>
+			<div class="beatmapImageContainer">
+				<img class="beatmapImage" id="image">
+			</div>
+			<div class="beatmapInfo">
+				<p class="bsr"><span id="bsr_text">BSR: </span><span id="bsr">00000</span></p>
+				<p class="mapper" id="mapper">Mapper</p>
+				<p class="artist" id="artist">ArtistName</p>
+				<h1 class="song" id="title">SongName</h1>
+			</div>
+		</div>
+	</div>
+	<script src="./js/options.js"></script>
+
+	<script src="./js/ui.js"></script>
+	<script src="./js/events.js"></script>
+	<script src="./js/manager.js"></script>
+</body>
+
 </html>
