@@ -16,15 +16,16 @@ const ui = (() => {
 		const miss_energy = -15;
 		const drain_energy = -0.13;  //per msec
 		const battery_unit = 25;
-		if (html_id["rank"])       var rank = document.getElementById("rank");
+		if (html_id["rank"]) var rank = document.getElementById("rank");
 		if (html_id["percentage"]) var percentage = document.getElementById("percentage");
-		if (html_id["score"])      var score = document.getElementById("score");
-		if (html_id["raw_score"])  var raw_score = document.getElementById("raw_score");
-		if (html_id["combo"])      var combo = document.getElementById("combo");
-		if (html_id["miss"])       var miss = document.getElementById("miss");
-		if (html_id["energy"])     var energy = document.getElementById("energy");
+		if (html_id["score"]) var score = document.getElementById("score");
+		if (html_id["raw_score"]) var raw_score = document.getElementById("raw_score");
+		if (html_id["combo"]) var combo = document.getElementById("combo");
+		if (html_id["miss"]) var miss = document.getElementById("miss");
+		if (html_id["energy"]) var energy = document.getElementById("energy");
 		if (html_id["energy_bar"]) var energy_bar = document.getElementById("energy_bar");
-		if (html_id["mod_nf"])     var mod_nf = document.getElementById("mod_nf");
+		if (html_id["mod_nf"]) var mod_nf = document.getElementById("mod_nf");
+		if (html_id["key_score"]) var key_score = document.getElementById("key_score");
 
 		function format(number) {
 			return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -35,14 +36,14 @@ const ui = (() => {
 			if (html_id["score"]) score.innerText = format(performance.score);
 			if (html_id["raw_score"]) raw_score.innerText = format(performance.rawScore);
 			if (html_id["combo"]) combo.innerText = performance.combo;
-			if (html_id["rank"])  rank.innerText = performance.rank;
+			if (html_id["rank"]) rank.innerText = performance.rank;
 			if (full_combo) {
 				if (before_combo > performance.combo) full_combo = false;
-				switch(data.event) {
+				switch (data.event) {
 					case "noteMissed":
 					case "bombCut":
 					case "obstacleEnter":
-					full_combo = false;
+						full_combo = false;
 				}
 			}
 			before_combo = performance.combo;
@@ -68,6 +69,21 @@ const ui = (() => {
 				var score_num = performance.score / performance.currentMaxScore * 100.0
 				percentage.innerText = (performance.currentMaxScore > 0 ? score_num.toFixed(2) : "100.00") + "%";
 			}
+			if (html_id["key_score"]) {
+				var score_num = performance.score / performance.currentMaxScore * 100.0
+				//console.log(performance.currentMaxScore > 0 ? score_num.toFixed(2) : 100.00);
+				var key_score_num = performance.currentMaxScore > 0 ? score_num.toFixed(2) : 100.00
+				var key_score_arr = [
+					Math.floor(key_score_num / 100), // 100のくらい
+					Math.floor((key_score_num % 100) / 10), // 10のくらい
+					Math.floor(key_score_num % 10), // 1のくらい
+					Math.floor((key_score_num * 10) % 10), // 0.1のくらい
+					Math.floor((key_score_num * 100) % 10) // 0.01のくらい
+				];
+
+				console.log(key_score_arr);
+
+			}
 			if (now_energy !== null) {
 				if (typeof performance.energy !== "undefined") {
 					if (data.event === "energyChanged") {
@@ -78,7 +94,7 @@ const ui = (() => {
 						obstacle_time = data.time;
 					}
 					if (mod_instaFail === false && mod_batteryEnergy === false) {
-						switch(data.event) {
+						switch (data.event) {
 							case "noteCut":
 								now_energy += cut_energy;
 								break;
@@ -98,7 +114,7 @@ const ui = (() => {
 								break;
 						}
 					} else {
-						switch(data.event) {
+						switch (data.event) {
 							case "noteMissed":
 							case "bombCut":
 								if (mod_instaFail === true) {
@@ -124,8 +140,8 @@ const ui = (() => {
 				if (html_id["energy"]) energy.innerText = Math.round(now_energy) + "%";
 				if (html_id["energy_bar"]) energy_bar.setAttribute("style", `width: ${Math.round(now_energy)}%`);
 			}
-			
-			if (typeof op_performance !== "undefined") op_performance(data,now_energy);
+
+			if (typeof op_performance !== "undefined") op_performance(data, now_energy);
 		}
 	})();
 
@@ -133,8 +149,8 @@ const ui = (() => {
 		const radius = 30;
 		const circumference = radius * Math.PI * 2;
 
-		if (html_id["progress"])      var bar = document.getElementById("progress");
-		if (html_id["song_time"])     var song_time = document.getElementById("song_time");
+		if (html_id["progress"]) var bar = document.getElementById("progress");
+		if (html_id["song_time"]) var song_time = document.getElementById("song_time");
 
 		var active = false;
 
@@ -186,7 +202,7 @@ const ui = (() => {
 		return {
 			start(time, length, speed) {
 				active = true;
-			  if (speed != false) song_speed = speed;
+				if (speed != false) song_speed = speed;
 				began = time;
 				duration = length * song_speed;
 
@@ -222,29 +238,29 @@ const ui = (() => {
 	const beatmap = (() => {
 		const beatsaver_url = 'https://api.beatsaver.com/maps/hash/';
 		const request_timeout = 5000; //msec
-		if (html_id["image"])         var cover = document.getElementById("image");
+		if (html_id["image"]) var cover = document.getElementById("image");
 
-		if (html_id["title"])         var title = document.getElementById("title");
-		if (html_id["subtitle"])      var subtitle = document.getElementById("subtitle");
-		if (html_id["artist"])        var artist = document.getElementById("artist");
+		if (html_id["title"]) var title = document.getElementById("title");
+		if (html_id["subtitle"]) var subtitle = document.getElementById("subtitle");
+		if (html_id["artist"]) var artist = document.getElementById("artist");
 		if (html_id["mapper_header"]) var mapper_header = document.getElementById("mapper_header");
-		if (html_id["mapper"])        var mapper = document.getElementById("mapper");
+		if (html_id["mapper"]) var mapper = document.getElementById("mapper");
 		if (html_id["mapper_footer"]) var mapper_footer = document.getElementById("mapper_footer");
 
-		if (html_id["difficulty"])    var difficulty = document.getElementById("difficulty");
-		if (html_id["bpm"])           var bpm = document.getElementById("bpm");
-		if (html_id["njs"])           var njs = document.getElementById("njs");
-		if (html_id["njs_text"])      var njs_text = document.getElementById("njs_text");
-		if (html_id["bsr"])           var bsr = document.getElementById("bsr");
-		if (html_id["bsr_text"])      var bsr_text = document.getElementById("bsr_text");
-		if (html_id["mod"])           var mod = document.getElementById("mod");
-		if (html_id["mod_nf"])        var mod_nf = document.getElementById("mod_nf");
-		if (html_id["pre_bsr"])       var pre_bsr = document.getElementById("pre_bsr");
-		if (html_id["pre_bsr_text"])  var pre_bsr_text = document.getElementById("pre_bsr_text");
-		if (html_id["energy"])        var energy = document.getElementById("energy");
-		if (html_id["energy_group"])  var energy_group = document.getElementById("energy_group");
+		if (html_id["difficulty"]) var difficulty = document.getElementById("difficulty");
+		if (html_id["bpm"]) var bpm = document.getElementById("bpm");
+		if (html_id["njs"]) var njs = document.getElementById("njs");
+		if (html_id["njs_text"]) var njs_text = document.getElementById("njs_text");
+		if (html_id["bsr"]) var bsr = document.getElementById("bsr");
+		if (html_id["bsr_text"]) var bsr_text = document.getElementById("bsr_text");
+		if (html_id["mod"]) var mod = document.getElementById("mod");
+		if (html_id["mod_nf"]) var mod_nf = document.getElementById("mod_nf");
+		if (html_id["pre_bsr"]) var pre_bsr = document.getElementById("pre_bsr");
+		if (html_id["pre_bsr_text"]) var pre_bsr_text = document.getElementById("pre_bsr_text");
+		if (html_id["energy"]) var energy = document.getElementById("energy");
+		if (html_id["energy_group"]) var energy_group = document.getElementById("energy_group");
 		var httpRequest = new XMLHttpRequest();
-		
+
 		function format(number) {
 			if (Number.isNaN(number)) {
 				return "NaN";
@@ -289,27 +305,27 @@ const ui = (() => {
 				beatmap.difficulty = "Expert+";
 			}
 
-			if (html_id["image"])    cover.setAttribute("src", `data:image/png;base64,${beatmap.songCover}`);
+			if (html_id["image"]) cover.setAttribute("src", `data:image/png;base64,${beatmap.songCover}`);
 
-			if (html_id["title"])    title.innerText = beatmap.songName;
+			if (html_id["title"]) title.innerText = beatmap.songName;
 			if (html_id["subtitle"]) subtitle.innerText = beatmap.songSubName;
-			if (html_id["bsr"])      bsr.innerText = '';
+			if (html_id["bsr"]) bsr.innerText = '';
 			if (html_id["bsr_text"]) bsr_text.innerText = '';
-			
-			httpRequest.onreadystatechange = function() {
-				if(this.readyState == 4 && this.status == 200) {
+
+			httpRequest.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
 					now_map = this.response;
 					if (now_map !== null) {
-						if (html_id["bsr"])      bsr.innerText = now_map.key;
+						if (html_id["bsr"]) bsr.innerText = now_map.key;
 						if (html_id["bsr_text"]) bsr_text.innerText = bsr_text_org;
 					}
 					if (typeof op_beatsaver_res !== "undefined") op_beatsaver_res(now_map);
 				}
 			}
-			
+
 			if (pre_songHash === beatmap.songHash) {
 				if (bsr_display && now_map !== null) {
-					if (html_id["bsr"])      bsr.innerText = now_map.key;
+					if (html_id["bsr"]) bsr.innerText = now_map.key;
 					if (html_id["bsr_text"]) bsr_text.innerText = bsr_text_org;
 				}
 			} else {
@@ -323,15 +339,15 @@ const ui = (() => {
 					httpRequest.send(null);
 				}
 			}
-			
+
 			if (html_id["artist"]) artist.innerText = beatmap.songAuthorName;
 			if (beatmap.levelAuthorName) {
 				if (html_id["mapper_header"]) mapper_header.innerText = mapper_header_org;
-				if (html_id["mapper"])        mapper.innerText = beatmap.levelAuthorName;
+				if (html_id["mapper"]) mapper.innerText = beatmap.levelAuthorName;
 				if (html_id["mapper_footer"]) mapper_footer.innerText = mapper_footer_org;
 			} else {
 				if (html_id["mapper_header"]) mapper_header.innerText = "";
-				if (html_id["mapper"])        mapper.innerText = "";
+				if (html_id["mapper"]) mapper.innerText = "";
 				if (html_id["mapper_footer"]) mapper_footer.innerText = "";
 			}
 
@@ -345,23 +361,23 @@ const ui = (() => {
 				if (html_id["njs"]) njs.innerText = "";
 				if (html_id["njs_text"]) njs_text.innerText = "";
 			}
-			
+
 			if (html_id["mod"]) {
 				var mod_text = "";
-				if (mod_data.instaFail === true)          mod_text += "IF,";
-				if (mod_data.batteryEnergy === true)      mod_text += "BE,";
+				if (mod_data.instaFail === true) mod_text += "IF,";
+				if (mod_data.batteryEnergy === true) mod_text += "BE,";
 				if (mod_data.disappearingArrows === true) mod_text += "DA,";
-				if (mod_data.ghostNotes === true)         mod_text += "GN,";
-				if (mod_data.songSpeed === "Faster")      mod_text += "FS,";
-				if (mod_data.songSpeed === "Slower")      mod_text += "SS,";
-				if (mod_data.noFail === true)             mod_text += "NF,";
-				if (mod_data.obstacles === false)         mod_text += "NO,";
-				if (mod_data.noBombs === true)            mod_text += "NB,";
-				if (mod_data.noArrows === true)           mod_text += "NA,";
-				mod_text = mod_text.slice(0,-1);
+				if (mod_data.ghostNotes === true) mod_text += "GN,";
+				if (mod_data.songSpeed === "Faster") mod_text += "FS,";
+				if (mod_data.songSpeed === "Slower") mod_text += "SS,";
+				if (mod_data.noFail === true) mod_text += "NF,";
+				if (mod_data.obstacles === false) mod_text += "NO,";
+				if (mod_data.noBombs === true) mod_text += "NB,";
+				if (mod_data.noArrows === true) mod_text += "NA,";
+				mod_text = mod_text.slice(0, -1);
 				mod.innerText = mod_text;
 			}
-			
+
 			if (html_id["mod_nf"]) {
 				if (mod_data.noFail === true) {
 					mod_nf.innerText = "";
@@ -370,15 +386,15 @@ const ui = (() => {
 					mod_nf.innerText = "No NF!";
 				}
 			}
-			
+
 			if (pre_bsr_data === null) {
-				if (html_id["pre_bsr"])      pre_bsr.innerText = "";
+				if (html_id["pre_bsr"]) pre_bsr.innerText = "";
 				if (html_id["pre_bsr_text"]) pre_bsr_text.innerText = "";
 			} else {
-				if (html_id["pre_bsr"])      pre_bsr.innerText = pre_map.key;
+				if (html_id["pre_bsr"]) pre_bsr.innerText = pre_map.key;
 				if (html_id["pre_bsr_text"]) pre_bsr_text.innerText = pre_bsr_text_org;
 			}
-			if (typeof op_beatmap !== "undefined") op_beatmap(data,now_map,pre_map);
+			if (typeof op_beatmap !== "undefined") op_beatmap(data, now_map, pre_map);
 		}
 	})();
 
@@ -393,20 +409,20 @@ const ui = (() => {
 			if (typeof op_show !== "undefined") op_show();
 		},
 
-    start_hidden_set(){
-      start_hidden = true;
-      if (menu_shine) {
-        document.getElementById("scoreStats").setAttribute("style", "visibility: hidden");
-        menu_shine = false;
-      }
-    },
+		start_hidden_set() {
+			start_hidden = true;
+			if (menu_shine) {
+				document.getElementById("scoreStats").setAttribute("style", "visibility: hidden");
+				menu_shine = false;
+			}
+		},
 
-    start_hidden_release() {
-      if (start_hidden) {
-        start_hidden = false;
-        document.getElementById("scoreStats").setAttribute("style", "visibility: visible");
-      }
-    },
+		start_hidden_release() {
+			if (start_hidden) {
+				start_hidden = false;
+				document.getElementById("scoreStats").setAttribute("style", "visibility: visible");
+			}
+		},
 
 		performance,
 		timer,
