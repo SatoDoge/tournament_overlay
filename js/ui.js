@@ -80,9 +80,7 @@ const ui = (() => {
 					Math.floor((key_score_num * 10) % 10), // 0.1のくらい
 					Math.floor((key_score_num * 100) % 10) // 0.01のくらい
 				];
-
-				console.log(key_score_arr);
-
+				
 			}
 			if (now_energy !== null) {
 				if (typeof performance.energy !== "undefined") {
