@@ -80,7 +80,20 @@ const ui = (() => {
 					Math.floor((key_score_num * 10) % 10), // 0.1のくらい
 					Math.floor((key_score_num * 100) % 10) // 0.01のくらい
 				];
-				
+				key_score_sum = 0;
+				for (var i = 0; i < key_score_arr.length; i++) {
+					key_score_sum += key_score_arr[i];
+				}
+				if (key_detail) {
+					document.getElementById("key_score").innerHTML = `
+						<p class="keyDetails small">${key_score_arr.join("+")}</p>
+						<p class="keyDetails large">${key_score_sum}</p>
+					`
+				} else {
+					document.getElementById("key_score").innerHTML = `
+						${key_score_sum}
+					`
+				}
 			}
 			if (now_energy !== null) {
 				if (typeof performance.energy !== "undefined") {
