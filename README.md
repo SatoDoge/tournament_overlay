@@ -109,3 +109,12 @@ https://rynan4818.github.io/tournament_overlay/?modifiers=scale
 
 ## 備考
 index.html, bsdp-like_d.html, bsdp-like.css は[BSDP-Overlay](https://github.com/kOFReadie/BSDP-Overlay)を元に改造しています。
+
+## 鍵ルール用に追加されたモディファイア
+
+| **モディファイア**         | **説明**                                                                                     |
+|----------------------------|---------------------------------------------------------------------------------------------|
+| **key**                    | 鍵ルールでのスコアを通常表示します                                                           |
+| **keyDetail**              | 鍵ルールでのスコアを詳細表示します                                                           |
+| **color_&lt;CSS Color Name&gt;** | `color_` のあとに鍵スコアを表示する際の色を [CSS Color Name](https://www.w3.org/TR/css-color-3/#svg-color) で設定します。 |
+| **hex_&lt;Hexadecimal&gt;** | `hex_` のあとに鍵スコアを表示する際の色を16進数で設定します。<br>**※`hex_` のあとは `#` を含めず直接16進数を指定してください** |
