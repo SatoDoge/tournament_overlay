@@ -6,6 +6,7 @@ var auto_scale = true;
 var start_hidden = false;
 var menu_shine = true;
 var key_detail = false;
+
 const check_id = ["overlay", "rank", "percentage", "combo", "score", "progress", "mod_nf", "raw_score",
 	"image", "title", "subtitle", "artist", "difficulty", "bpm", "njs", "bsr", "bsr_text",
 	"mapper", "mapper_header", "mapper_footer", "song_time", "song_length", "mod", "miss",
@@ -41,16 +42,20 @@ if (html_id["njs_text"]) var njs_text_org = document.getElementById("njs_text").
 					auto_scale = false;
 				}
 				if (modifier === "key" || modifier === "keyDetail") {
-					if(html_id["key_score"]){
+					if (html_id["key_score"]) {
 						document.getElementById("key_score").style.display = "";
 					}
 					if (modifier === "keyDetail") {
 						key_detail = true;
 					}
-				}else {
-					if(html_id["key_score"]){
-						document.getElementById("key_score").style.display = "none";
-					}
+				}
+				
+				if (modifier.split("_")[0] === "color") {
+					document.getElementById("key_score").style.color = modifier.split("_")[1];
+				}
+
+				if (modifier.split("_")[0] === "hex") {
+					document.getElementById("key_score").style.color = "#" + modifier.split("_")[1];
 				}
 				var link = document.createElement("link");
 
@@ -64,7 +69,6 @@ if (html_id["njs_text"]) var njs_text_org = document.getElementById("njs_text").
 
 	Object.keys(handlers).forEach((key) => {
 		var value = query.get(key);
-
 		if (value) {
 			handlers[key](value);
 		}
