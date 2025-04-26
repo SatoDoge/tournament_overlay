@@ -33,7 +33,7 @@ h1 { line-height: 0; margin: 0; }
     transform: translate(-50%);
     width: max-content;
     min-width: 400px;
-    background-color: rgba(40, 40, 40, 0.7);
+    background-color: rgb(18, 18, 20);
     height: 50px;
     display: flex;
     justify-content: space-around;
@@ -280,4 +280,8 @@ h1 { line-height: 0; margin: 0; }
     margin: 0;
     text-align: center;
     display: block; /* ブロック要素として扱う */
+}
+
+#key_score {
+    color: cyan;
 }
