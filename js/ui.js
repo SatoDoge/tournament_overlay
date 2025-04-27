@@ -70,29 +70,32 @@ const ui = (() => {
 				percentage.innerText = (performance.currentMaxScore > 0 ? score_num.toFixed(2) : "100.00") + "%";
 			}
 			if (html_id["key_score"]) {
-				var score_num = performance.score / performance.currentMaxScore * 100.0
-				//console.log(performance.currentMaxScore > 0 ? score_num.toFixed(2) : 100.00);
-				var key_score_num = performance.currentMaxScore > 0 ? score_num.toFixed(2) : 100.00
-				var key_score_arr = [
-					Math.floor(key_score_num / 100), // 100のくらい
-					Math.floor((key_score_num % 100) / 10), // 10のくらい
-					Math.floor(key_score_num % 10), // 1のくらい
-					Math.floor((key_score_num * 10) % 10), // 0.1のくらい
-					Math.floor((key_score_num * 100) % 10) // 0.01のくらい
-				];
-				key_score_sum = 0;
-				for (var i = 0; i < key_score_arr.length; i++) {
-					key_score_sum += key_score_arr[i];
+				// percentage.innerText を直接使って処理する
+				var percentage_text = percentage.innerText;
+
+				// 数字部分だけ取り出す（パーセント記号を除く）
+				var numeric_part = percentage_text.replace("%", "");
+
+				// 各文字ごとに分解して数字を取り出す
+				var key_score_arr = [];
+				var key_score_sum = 0;
+				for (var i = 0; i < numeric_part.length; i++) {
+					var c = numeric_part.charAt(i);
+					if (c >= '0' && c <= '9') { // 数字だけを対象にする
+						key_score_arr.push(Number(c));
+						key_score_sum += Number(c);
+					}
 				}
+
 				if (key_detail) {
 					document.getElementById("key_score").innerHTML = `
-						<p class="keyDetails small">${key_score_arr.join("+")}</p>
-						<p class="keyDetails large">${key_score_sum}</p>
-					`
+							<p class="keyDetails small">${key_score_arr.join("+")}</p>
+							<p class="keyDetails large">${key_score_sum}</p>
+						`;
 				} else {
 					document.getElementById("key_score").innerHTML = `
-						${key_score_sum}
-					`
+							${key_score_sum}
+						`;
 				}
 			}
 			if (now_energy !== null) {
