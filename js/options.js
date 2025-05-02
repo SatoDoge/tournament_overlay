@@ -6,6 +6,7 @@ var auto_scale = true;
 var start_hidden = false;
 var menu_shine = true;
 var key_detail = false;
+var scorePostIp = null;
 
 const check_id = ["overlay", "rank", "percentage", "combo", "score", "progress", "mod_nf", "raw_score",
 	"image", "title", "subtitle", "artist", "difficulty", "bpm", "njs", "bsr", "bsr_text",
@@ -64,6 +65,9 @@ if (html_id["njs_text"]) var njs_text_org = document.getElementById("njs_text").
 
 				document.head.appendChild(link);
 			});
+		},
+		ip(string) {
+			scorePostIp = string;
 		}
 	};
 
