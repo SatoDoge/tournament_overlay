@@ -57,10 +57,9 @@ const events = {
 	},
 
 	finished(data) {
-		ui.sendScore(data);
 		ui.start_hidden_release();
 		ui.performance(data);
-		console.log("Finished");
+		ui.sendScore(data);
 		if (typeof op_finished !== "undefined") op_finished(data);
 	},
 
@@ -119,6 +118,7 @@ const events = {
 
 
 	pause(data) {
+		//ui.sendScore(data);
 		var ip = query.get("ip");
 		var diff_time = 0;
 		if (ip && ip != "localhost" && ip != "127.0.0.1") {

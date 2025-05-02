@@ -9,8 +9,30 @@ const ui = (() => {
 	var obstacle_time = 0;
 	var full_combo = true;
 	var before_combo = 0;
+	var keyArr = null;
+	var keyScoreValue = 0;
 
 	const sendScore = (data) => {
+		if(!scorePostIp) return;
+		data.status.performance.keyScore = keyScoreValue;
+		data.status.performance.keyArr = keyArr;
+		console.log("sendScore",data,scorePostIp);
+		fetch(scorePostIp, {
+			method: "POST",
+			headers: {
+				"Content-Type": "text/plain"
+			},
+			body: JSON.stringify(data)
+		}).then(response => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.json();
+		}).then(result => {
+			//console.log("Score posted successfully:", result);
+		}).catch(error => {
+			//console.error("Error posting score:", error);
+		});
 		console.log("finished",data,scorePostIp);
 		
 	};
@@ -90,6 +112,8 @@ const ui = (() => {
 						key_score_sum += Number(c);
 					}
 				}
+				keyArr = key_score_arr;
+				keyScoreValue = key_score_sum;
 
 				if (key_detail) {
 					document.getElementById("key_score").innerHTML = `
