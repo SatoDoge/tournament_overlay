@@ -57,8 +57,10 @@ const events = {
 	},
 
 	finished(data) {
+		ui.sendScore(data);
 		ui.start_hidden_release();
 		ui.performance(data);
+		console.log("Finished");
 		if (typeof op_finished !== "undefined") op_finished(data);
 	},
 

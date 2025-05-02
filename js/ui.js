@@ -10,6 +10,10 @@ const ui = (() => {
 	var full_combo = true;
 	var before_combo = 0;
 
+	const sendScore = (data) => {
+		console.log("finished",data,scorePostIp);
+		
+	};
 	const performance = (() => {
 		const cut_energy = 1;
 		const misscut_energy = -10;
@@ -437,7 +441,7 @@ const ui = (() => {
 				document.getElementById("scoreStats").setAttribute("style", "visibility: visible");
 			}
 		},
-
+		sendScore,
 		performance,
 		timer,
 		beatmap

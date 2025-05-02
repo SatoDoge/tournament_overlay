@@ -66,7 +66,7 @@ if (html_id["njs_text"]) var njs_text_org = document.getElementById("njs_text").
 				document.head.appendChild(link);
 			});
 		},
-		ip(string) {
+		postIp(string) {
 			scorePostIp = string;
 		}
 	};
