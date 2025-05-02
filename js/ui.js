@@ -14,8 +14,10 @@ const ui = (() => {
 
 	const sendScore = (data) => {
 		if(!scorePostIp) return;
+		if(!playerId) return;
 		data.status.performance.keyScore = keyScoreValue;
 		data.status.performance.keyArr = keyArr;
+		data.playerId = playerId;
 		console.log("sendScore",data,scorePostIp);
 		fetch(scorePostIp, {
 			method: "POST",
@@ -33,7 +35,7 @@ const ui = (() => {
 		}).catch(error => {
 			//console.error("Error posting score:", error);
 		});
-		console.log("finished",data,scorePostIp);
+		//console.log("finished",data,scorePostIp);
 		
 	};
 	const performance = (() => {
