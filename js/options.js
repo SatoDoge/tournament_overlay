@@ -7,6 +7,7 @@ var start_hidden = false;
 var menu_shine = true;
 var key_detail = false;
 var scorePostIp = null;
+var spreadSheet = null;
 var playerId = null;
 
 const check_id = ["overlay", "rank", "percentage", "combo", "score", "progress", "mod_nf", "raw_score",
@@ -69,6 +70,9 @@ if (html_id["njs_text"]) var njs_text_org = document.getElementById("njs_text").
 		},
 		postIp(string) {
 			scorePostIp = string;
+		},
+		spreadSheet(string) {
+			spreadSheetId = string;
 		},
 		playerId(string) {
 			playerId = string;

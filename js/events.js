@@ -60,6 +60,7 @@ const events = {
 		ui.start_hidden_release();
 		ui.performance(data);
 		ui.sendScore(data);
+		console.log("Finished song");
 		if (typeof op_finished !== "undefined") op_finished(data);
 	},
 
