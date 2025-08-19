@@ -6,6 +6,11 @@ var auto_scale = true;
 var start_hidden1 = false;
 var start_hidden2 = false;
 var menu_shine = true;
+var is_connect_http = false;
+var is_connect_multi = false;
+var is_connect_score = false;
+var score_server = null;
+var userID = null;
 const check_id = ["overlay", "rank", "percentage", "combo", "score", "progress", "mod_nf", "raw_score",
   "image", "title", "subtitle", "artist", "difficulty", "bpm", "njs", "bsr", "bsr_text",
   "mapper", "mapper_header", "mapper_footer", "song_time", "song_length", "mod", "miss",

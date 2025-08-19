@@ -9,6 +9,51 @@ const ui = (() => {
   var obstacle_time = 0;
   var full_combo = true;
   var before_combo = 0;
+  var diff = null;
+  var map_hash = null;
+  var textAccuracy = null;
+  const sendScore = (data) => {
+    var percentage_text = document.getElementById("percentage").innerText;
+    // 数字部分だけ取り出す（パーセント記号を除く）
+    var numeric_part = percentage_text.replace("%", "");
+    textAccuracy = numeric_part;
+    console.log(userID);
+    if (!userID && !is_connect_http && !is_connect_multi && !is_connect_score) return;
+    var playerId = userID;
+    Object.assign(data.status.performance, {
+      textAccuracy
+    })
+    Object.assign(data, {
+      playerId,
+      diff,
+      map_hash,
+    });
+    console.log("Sending score data:", data);
+
+    // fetch処理を共通化
+    const postScore = async () => {
+      try {
+        const response = await fetch(score_server, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error("Network response was not ok");
+        const result = await response.json();
+        if (result.status !== "success") {
+          document.getElementById("combo").style.color = "orange";
+          console.error("Error in response:", result.message);
+        } else {
+          document.getElementById("combo").style.color = "#5AFF19";
+          console.log("Score sent successfully:", result);
+        }
+      } catch (error) {
+        document.getElementById("combo").style.color = "red";
+        console.error("Error sending score:", error);
+      }
+    };
+    postScore();
+  };
 
   const performance = (() => {
     const cut_energy = 1;
@@ -243,6 +288,8 @@ const ui = (() => {
     if (html_id["pre_bsr_text"]) var pre_bsr_text = document.getElementById("pre_bsr_text");
     if (html_id["energy"]) var energy = document.getElementById("energy");
     if (html_id["energy_group"]) var energy_group = document.getElementById("energy_group");
+
+
     var httpRequest = new XMLHttpRequest();
 
     function format(number) {
@@ -264,6 +311,8 @@ const ui = (() => {
       var visibility = "visible";
       var ip = query.get("ip");
       var diff_time = 0;
+      diff = beatmap.difficulty;
+      map_hash = beatmap.songHash;
       full_combo = true;
       before_combo = 0;
       if (ip && ip != "localhost" && ip != "127.0.0.1") {
@@ -423,7 +472,7 @@ const ui = (() => {
       document.getElementById("checkMark3").setAttribute("style", "visibility: hidden");
       document.getElementById("checkMark4").setAttribute("style", "visibility: hidden");
     },
-
+    sendScore,
     performance,
     timer,
     beatmap
